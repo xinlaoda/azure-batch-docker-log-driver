@@ -1,0 +1,19 @@
+# Binaries
+azure-batch-docker-log-driver
+*.exe
+
+# Plugin build artifacts
+plugin/
+
+# Go
+vendor/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db

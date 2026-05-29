@@ -1,0 +1,6 @@
+{
+  "log-driver": "azure-batch-docker-log-driver:latest",
+  "log-opts": {
+    "env-regex": "^AZ_BATCH_"
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "description": "Docker log driver plugin that sends Azure Batch container task logs to Azure Monitor Log Analytics",
+  "documentation": "https://github.com/azure-batch-docker-log-driver",
+  "entrypoint": ["/azure-batch-docker-log-driver"],
+  "interface": {
+    "types": ["docker.logdriver/1.0"],
+    "socket": "batch-log.sock"
+  },
+  "network": {
+    "type": "host"
+  },
+  "env": [
+    { "name": "DCE_ENDPOINT",              "description": "Azure Monitor Data Collection Endpoint URL",               "settable": ["value"], "value": "" },
+    { "name": "DCR_IMMUTABLE_ID",          "description": "Data Collection Rule immutable ID",                        "settable": ["value"], "value": "" },
+    { "name": "DCR_STREAM_NAME",           "description": "DCR stream name (e.g. Custom-BatchLogs_CL)",              "settable": ["value"], "value": "" },
+    { "name": "MANAGED_IDENTITY_CLIENT_ID","description": "User-assigned Managed Identity client ID (optional)",      "settable": ["value"], "value": "" },
+    { "name": "BUFFER_MAX_SIZE",           "description": "Max log entries before flush (default: 1000)",             "settable": ["value"], "value": "1000" },
+    { "name": "BUFFER_MAX_INTERVAL",       "description": "Max interval between flushes (default: 5s)",              "settable": ["value"], "value": "5s" },
+    { "name": "DEBUG",                     "description": "Enable verbose debug logging (true/false, default: false)", "settable": ["value"], "value": "false" }
+  ],
+  "mounts": [
+    {
+      "name": "logdir",
+      "description": "Host directory for plugin log file",
+      "source": "/var/log",
+      "destination": "/var/log",
+      "type": "bind",
+      "options": ["rbind", "rw"]
+    }
+  ],
+  "linux": {
+    "capabilities": ["CAP_SYS_ADMIN"],
+    "allow-all-devices": false,
+    "devices": null
+  }
+}
